@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🎮 Tutor XP — 6º Ano</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#E8F5E9,#F1F8E9,#E0F2F1);min-height:100vh;padding-bottom:60px;}
+.card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.08);}
+.btn{display:block;border:none;border-radius:10px;padding:12px 20px;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;cursor:pointer;text-align:center;}
+.btn:disabled{opacity:.4;cursor:default;}
+.bg{background:#1B5E20;color:#fff;}
+.bw{background:#f0f0f0;color:#555;}
+.bo{background:#E65100;color:#fff;}
+.w100{width:100%;}
+.fld{width:100%;padding:10px 12px;border-radius:10px;border:2px solid #ddd;font-family:'Nunito',sans-serif;font-size:13px;outline:none;}
+.fld:focus{border-color:#1B5E20;}
+textarea.fld{resize:vertical;line-height:1.6;}
+.xpt{height:10px;border-radius:5px;overflow:hidden;}
+.xpf{height:100%;border-radius:5px;transition:width .6s ease;}
+.tag{font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;color:#fff;display:inline-block;}
+.opt{padding:11px 14px;margin-bottom:8px;border-radius:10px;border:2px solid #e0e0e0;background:#fff;cursor:pointer;font-weight:600;font-size:13px;display:flex;align-items:center;gap:10px;user-select:none;}
+.circ{width:22px;height:22px;border-radius:50%;background:#e0e0e0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;}
+.tfr{display:flex;gap:10px;}
+.tfo{flex:1;padding:16px 10px;border-radius:12px;border:2px solid #e0e0e0;background:#fff;cursor:pointer;text-align:center;font-family:'Nunito',sans-serif;font-weight:900;font-size:14px;user-select:none;}
+.fb{margin-top:12px;border-radius:12px;padding:14px;border:2px solid;}
+.fbok{background:#E8F5E9;border-color:#A5D6A7;}
+.fbno{background:#FFEBEE;border-color:#FFCDD2;}
+.pill{border-radius:20px;padding:3px 12px;font-weight:900;font-size:13px;color:#fff;display:inline-block;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mhdr{font-size:11px;font-weight:800;color:#888;text-transform:uppercase;margin-bottom:6px;}
+.mi{padding:9px 11px;margin-bottom:6px;border-radius:8px;border:2px solid #e0e0e0;font-size:12px;font-weight:600;cursor:pointer;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1B5E20;color:#fff;padding:10px 22px;border-radius:30px;font-weight:800;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.3);z-index:9999;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;}
+.toast.on{opacity:1;}
+.bbar{padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.bbtn{background:rgba(255,255,255,.2);border:none;color:#fff;padding:7px 14px;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap;}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;padding:14px 12px;}
+.mc2{cursor:pointer;border:2px solid transparent;position:relative;}
+.mc2:active{transform:scale(.97);}
+.cdot{position:absolute;top:8px;right:8px;background:#2E7D32;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:10px;}
+.rgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:18px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin 1s linear infinite;display:inline-block;}
+.pg{display:none;}
+.pg.on{display:block;}
+</style>
+</head>
+<body>
+<div class="toast" id="TOAST"></div>
+
+<!-- ═══════════════════════════ PAGE: HOME ═══════════════════════ -->
+<div id="PH" class="pg on">
+  <div style="background:linear-gradient(135deg,#1B5E20,#2E7D32);padding:18px 16px;box-shadow:0 4px 20px rgba(27,94,32,.4);">
+    <div style="max-width:640px;margin:0 auto;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+        <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:#F9A825;line-height:1.8;flex-shrink:0;">🎮<br>TUTOR<br>XP</div>
+        <div>
+          <div style="color:#fff;font-weight:900;font-size:18px;">Sistema de Estudos — 6º Ano</div>
+          <div style="color:#A5D6A7;font-size:11px;">IA · Gamificação · Minecraft · Colégio São Luís</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.12);border-radius:14px;padding:14px 16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div>
+            <div id="HXP" style="color:#F9A825;font-weight:900;font-size:30px;line-height:1;">0 XP</div>
+            <div id="HLV" style="color:#C8E6C9;font-size:12px;margin-top:3px;">🌱 Aprendiz</div>
+          </div>
+          <div id="HBDG" style="border-radius:12px;padding:10px 13px;text-align:center;min-width:78px;background:#4CAF5022;border:2px solid #4CAF50;">
+            <div id="HBE" style="font-size:24px;">🌱</div>
+            <div id="HBN" style="font-size:10px;font-weight:800;color:#4CAF50;">Aprendiz</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.75);margin-bottom:4px;">
+          <span id="HBL">Nível</span><span id="HBR">100 XP</span>
+        </div>
+        <div class="xpt" style="background:rgba(255,255,255,.2);"><div class="xpf" id="HBF" style="width:0%;background:#4CAF50;"></div></div>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:640px;margin:0 auto;">
+    <div style="display:flex;gap:4px;padding:12px 12px 0;border-bottom:2px solid #C8E6C9;">
+      <button id="TM" onclick="htab('m')" style="padding:8px 14px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;border-radius:8px 8px 0 0;background:#1B5E20;color:#fff;border-bottom:2px solid #1B5E20;">📚 Matérias</button>
+      <button id="TR" onclick="htab('r')" style="padding:8px 14px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;border-radius:8px 8px 0 0;background:#f0f0f0;color:#666;border-bottom:2px solid transparent;">🏆 Ranking</button>
+    </div>
+    <div id="TMC"><div class="mgrid" id="MGRID"></div></div>
+    <div id="TRC" style="display:none;padding:14px 12px;">
+      <div class="card" id="RNKH" style="margin-bottom:14px;text-align:center;padding:20px;"></div>
+      <div id="RNKL"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ PAGE: GUIDE ══════════════════════ -->
+<div id="PG" class="pg">
+  <div id="GBAR" class="bbar" style="background:#1B5E20;">
+    <button class="bbtn" onclick="showPage('PH');renderHome()">← Voltar</button>
+    <span id="GTITLE" style="color:#fff;font-weight:900;font-size:16px;"></span>
+  </div>
+  <div style="max-width:640px;margin:14px auto 0;padding:0 12px;"><div id="GC"></div></div>
+</div>
+
+<!-- ═══════════════════════════ PAGE: UPLOAD ═════════════════════
+     CRITICAL: This page is shown via CSS class toggle only.
+     The input[type=file] is always in the DOM and always rendered.
+     No display:none on this page at load — it uses .pg (display:none)
+     but is toggled via class, same as all other pages.
+     The file input has NO special styling — identical to the working test.
+-->
+<div id="PU" class="pg">
+  <div id="UBAR" class="bbar" style="background:#1B5E20;">
+    <button class="bbtn" onclick="showPage('PG')">← Voltar</button>
+    <span id="UTITLE" style="color:#fff;font-weight:900;font-size:16px;">📎 Upload de arquivo</span>
+  </div>
+  <div style="max-width:640px;margin:14px auto 0;padding:0 12px;">
+    <div class="card">
+      <div style="font-weight:800;font-size:14px;color:#333;margin-bottom:4px;">Selecionar arquivos</div>
+      <div style="font-size:12px;color:#888;margin-bottom:14px;">PDF, foto, imagem, .txt — pode selecionar vários de uma vez</div>
+
+      <!-- THE FILE INPUT: plain, visible, no tricks -->
+      <input type="file" id="UFILE" multiple accept="image/*,.pdf,.txt"
+        style="display:block;width:100%;padding:10px;font-size:15px;border:2px solid #1B5E20;border-radius:8px;background:#E8F5E9;cursor:pointer;margin-bottom:14px;"/>
+
+      <div id="ULIST" style="margin-bottom:12px;"></div>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:6px;">💬 Observações extras (opcional):</div>
+        <textarea id="UEXT" class="fld" style="min-height:50px;" placeholder="Contexto adicional..."></textarea>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn bw" onclick="showPage('PG')">← Voltar</button>
+        <button id="UBTN" class="btn bg w100" style="flex:1;opacity:.4;" disabled onclick="doUp()">🚀 Gerar com IA</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ PAGE: QUIZ ═══════════════════════ -->
+<div id="PQ" class="pg">
+  <div id="QBAR" class="bbar">
+    <button class="bbtn" onclick="showPage('PG')">← Mudar guia</button>
+    <button class="bbtn" onclick="regenQuestions()" style="background:rgba(255,255,255,.15);">🔄 Novas questões</button>
+    <span id="QTITLE" style="color:#fff;font-weight:900;font-size:14px;"></span>
+  </div>
+  <div style="max-width:640px;margin:0 auto;padding:0 12px;">
+    <div style="margin:10px 0 14px;">
+      <div style="height:6px;border-radius:3px;background:#ddd;overflow:hidden;">
+        <div id="QPROG" style="height:100%;border-radius:3px;background:#1B5E20;width:0%;transition:width .4s;"></div>
+      </div>
+    </div>
+    <div id="QC"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ PAGE: LOADING ════════════════════ -->
+<div id="PL" class="pg">
+  <div style="max-width:640px;margin:60px auto 0;padding:0 12px;">
+    <div class="card" style="text-align:center;padding:40px 20px;">
+      <div class="spin" style="font-size:48px;margin-bottom:16px;">⚙️</div>
+      <div id="LMSG" style="font-weight:800;font-size:16px;color:#333;margin-bottom:8px;">Gerando exercícios...</div>
+      <div style="font-size:13px;color:#888;">Aguarde — pode levar até 30 segundos</div>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const MATS=[
+  {id:'matematica',   nome:'Matemática',        emoji:'🔢',cor:'#1565C0'},
+  {id:'portugues',    nome:'Língua Portuguesa', emoji:'📝',cor:'#2E7D32'},
+  {id:'ciencias',     nome:'Ciências',           emoji:'🔬',cor:'#6A1B9A'},
+  {id:'historia',     nome:'História',           emoji:'🏛️',cor:'#B71C1C'},
+  {id:'geografia',    nome:'Geografia',          emoji:'🌍',cor:'#00695C'},
+  {id:'ingles',       nome:'Língua Inglesa',     emoji:'🗣️',cor:'#AD1457'},
+  {id:'religiao',     nome:'Ens. Religioso',     emoji:'☮️',cor:'#4527A0'},
+  {id:'musica',       nome:'Música',             emoji:'🎵',cor:'#E65100'},
+  {id:'prod_textos',  nome:'Prod. de Textos',    emoji:'✍️',cor:'#37474F'},
+];
+const LVS=[
+  {min:0,   name:'Aprendiz',    mc:'Creeper',    emoji:'🌱',cor:'#4CAF50'},
+  {min:100, name:'Explorador',  mc:'Iron Golem', emoji:'🗺️',cor:'#1565C0'},
+  {min:300, name:'Especialista',mc:'Netherite',  emoji:'⚡',cor:'#7B1FA2'},
+  {min:600, name:'Mestre',      mc:'Diamante',   emoji:'🏅',cor:'#E65100'},
+  {min:1000,name:'Lendário',    mc:'The Warden', emoji:'🚀',cor:'#B71C1C'},
+];
+const glv=xp=>[...LVS].reverse().find(l=>xp>=l.min)||LVS[0];
+const gnl=xp=>LVS.find(l=>l.min>xp)||null;
+
+// ═══════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════
+const ls={
+  g:(k,d)=>{try{const s=localStorage.getItem(k);return s?JSON.parse(s):d;}catch{return d;}},
+  s:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+};
+const gst  = id=>ls.g('t6s',{})[id]||{xp:0,tot:0,hit:0};
+const gxp  = ()=>ls.g('t6x',0);
+const axp  = (id,xp)=>{
+  if(xp<=0)return;
+  const a=ls.g('t6s',{});const s=a[id]||{xp:0,tot:0,hit:0};
+  a[id]={...s,xp:s.xp+xp};ls.s('t6s',a);
+  ls.s('t6x',gxp()+xp);tst('+'+xp+' XP ⚡');
+};
+const ares=(id,ok)=>{
+  const a=ls.g('t6s',{});const s=a[id]||{xp:0,tot:0,hit:0};
+  a[id]={...s,tot:s.tot+1,hit:s.hit+(ok?1:0)};ls.s('t6s',a);
+};
+const gcache=id=>{try{const r=localStorage.getItem('t6c_'+id);if(!r)return null;const o=JSON.parse(r);return{q:o.q,content:o.content||null,age:Math.round((Date.now()-o.ts)/3600000)};}catch{return null;}};
+const scache=(id,q,content)=>{try{localStorage.setItem('t6c_'+id,JSON.stringify({q,content:content||null,ts:Date.now()}));}catch{}};
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+let _tt;
+function tst(m){const e=document.getElementById('TOAST');e.textContent=m;e.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>e.classList.remove('on'),2400);}
+
+// ═══════════════════════════════════════
+// NAVIGATION — CSS class toggle only
+// No display manipulation on individual elements
+// ═══════════════════════════════════════
+const PAGES=['PH','PG','PU','PQ','PL'];
+function showPage(id){
+  PAGES.forEach(p=>document.getElementById(p).classList.toggle('on',p===id));
+}
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let CM=null, CQS=[], CQI=0, CRES=[], LAST_CONTENT=null, UF=[];
+
+// ═══════════════════════════════════════
+// FILE INPUT — bound once, immediately
+// ═══════════════════════════════════════
+document.getElementById('UFILE').addEventListener('change', function(){
+  const files=Array.from(this.files||[]);
+  this.value=''; // allow re-selecting same file
+  if(!files.length)return;
+  processFiles(files);
+});
+
+async function processFiles(files){
+  document.getElementById('ULIST').innerHTML='<div style="font-size:13px;color:#888;padding:8px 0;">⏳ Lendo arquivos...</div>';
+  for(const f of files) await readFile(f);
+  renderFileList();
+}
+
+function readFile(file){
+  return new Promise(res=>{
+    const r=new FileReader(), n=file.name, t=file.type||'';
+    if(t.startsWith('image/')){
+      r.onload=e=>{UF.push({n,ft:'img',mime:t,b64:e.target.result.split(',')[1],prev:e.target.result});res();};
+      r.readAsDataURL(file);
+    } else if(t==='application/pdf'||n.toLowerCase().endsWith('.pdf')){
+      r.onload=e=>{UF.push({n,ft:'pdf',b64:e.target.result.split(',')[1]});res();};
+      r.readAsDataURL(file);
+    } else {
+      r.onload=e=>{UF.push({n,ft:'txt',content:e.target.result});res();};
+      r.readAsText(file);
+    }
+  });
+}
+
+function renderFileList(){
+  const list=document.getElementById('ULIST'), btn=document.getElementById('UBTN');
+  if(!UF.length){list.innerHTML='';if(btn){btn.disabled=true;btn.style.opacity='.4';}return;}
+  list.innerHTML='<div style="font-size:12px;font-weight:700;color:#1B5E20;margin-bottom:8px;">✅ '+UF.length+' arquivo(s) prontos:</div>'+
+    UF.map((f,i)=>
+      '<div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:#f8f8f8;border-radius:8px;margin-bottom:6px;border:1px solid #e0e0e0;">'+
+      (f.ft==='img'?'<img src="'+f.prev+'" style="width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;"/>':
+        '<div style="width:36px;height:36px;border-radius:6px;background:'+(f.ft==='pdf'?'#FFEBEE':'#E3F2FD')+';display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">'+(f.ft==='pdf'?'📄':'📝')+'</div>')+
+      '<div style="flex:1;min-width:0;">'+
+        '<div style="font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+f.n+'</div>'+
+        '<div style="font-size:10px;color:#aaa;">'+(f.ft==='pdf'?'PDF':f.ft==='img'?'Imagem':'Texto')+'</div>'+
+      '</div>'+
+      '<button onclick="delFile('+i+')" style="background:none;border:none;color:#ccc;cursor:pointer;font-size:18px;padding:0 6px;flex-shrink:0;">✕</button>'+
+      '</div>'
+    ).join('');
+  if(btn){btn.disabled=false;btn.style.opacity='1';}
+}
+
+function delFile(i){UF.splice(i,1);renderFileList();}
+
+// ═══════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════
+function renderHome(){
+  const xp=gxp(),l=glv(xp),n=gnl(xp),pct=n?Math.min((xp-l.min)/(n.min-l.min)*100,100):100;
+  document.getElementById('HXP').textContent=xp+' XP';
+  document.getElementById('HLV').textContent=l.emoji+' '+l.name+' — '+l.mc;
+  document.getElementById('HBE').textContent=l.emoji;
+  document.getElementById('HBN').textContent=l.name;
+  document.getElementById('HBN').style.color=l.cor;
+  document.getElementById('HBDG').style.cssText='border-radius:12px;padding:10px 13px;text-align:center;min-width:78px;background:'+l.cor+'22;border:2px solid '+l.cor+';';
+  document.getElementById('HBL').textContent=l.emoji+' '+l.name;
+  document.getElementById('HBR').textContent=n?(n.min-xp)+' XP → '+n.emoji:'MAX 🏆';
+  const f=document.getElementById('HBF');f.style.width=pct+'%';f.style.background=l.cor;
+  const grid=document.getElementById('MGRID');grid.innerHTML='';
+  MATS.forEach(m=>{
+    const s=gst(m.id),p=s.tot?Math.round(s.hit/s.tot*100):0,lv=glv(s.xp||0),hc=!!gcache(m.id);
+    const c=document.createElement('div');c.className='card mc2';c.style.border='2px solid '+m.cor+'22';
+    c.innerHTML=(hc?'<div class="cdot">💾</div>':'')+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">'+
+      '<div><div style="font-size:22px;">'+m.emoji+'</div><div style="font-weight:900;font-size:12px;color:#333;margin-top:2px;line-height:1.3;">'+m.nome+'</div></div>'+
+      '<div style="text-align:right;"><div style="font-weight:900;font-size:17px;color:'+m.cor+';">'+(s.xp||0)+'</div><div style="font-size:9px;color:#aaa;">XP</div></div></div>'+
+      '<div style="height:4px;border-radius:2px;background:#eee;overflow:hidden;margin-bottom:5px;"><div style="height:100%;width:'+p+'%;background:'+m.cor+';border-radius:2px;"></div></div>'+
+      '<div style="display:flex;justify-content:space-between;font-size:10px;color:#999;"><span>'+(s.tot||0)+' qs</span><span style="color:'+(p>=70?'#2E7D32':p>=40?'#E65100':'#aaa')+';font-weight:700;">'+p+'%</span></div>'+
+      '<div style="font-size:10px;color:'+lv.cor+';font-weight:700;margin-top:4px;">'+lv.emoji+' '+lv.name+'</div>';
+    c.onclick=()=>{CM=m;renderGuide(m);showPage('PG');};
+    grid.appendChild(c);
+  });
+}
+
+function renderRanking(){
+  const xp=gxp(),l=glv(xp),n=gnl(xp),pct=n?Math.min((xp-l.min)/(n.min-l.min)*100,100):100;
+  document.getElementById('RNKH').innerHTML=
+    '<div style="font-weight:900;font-size:28px;color:#1B5E20;">'+xp+' XP</div>'+
+    '<div style="font-size:13px;color:#888;margin-bottom:12px;">'+l.emoji+' '+l.name+' — '+l.mc+'</div>'+
+    '<div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:4px;"><span>'+l.emoji+' '+l.name+'</span><span>'+(n?(n.min-xp)+' XP → '+n.emoji:'MAX 🏆')+'</span></div>'+
+    '<div style="height:8px;border-radius:4px;background:#eee;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:'+l.cor+';border-radius:4px;"></div></div>';
+  const rl=document.getElementById('RNKL');rl.innerHTML='';
+  [...MATS].map(m=>({...m,s:gst(m.id)})).sort((a,b)=>(b.s.xp||0)-(a.s.xp||0)).forEach((m,i)=>{
+    const p=m.s.tot?Math.round(m.s.hit/m.s.tot*100):0,lv=glv(m.s.xp||0);
+    const d=document.createElement('div');d.className='card';d.style.cssText='margin-bottom:10px;border:2px solid '+m.cor+'22;';
+    d.innerHTML='<div style="display:flex;gap:12px;align-items:center;">'+
+      '<div style="font-weight:900;font-size:20px;min-width:32px;text-align:center;color:'+(i<3?'#F9A825':'#ccc')+'">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1))+'</div>'+
+      '<div style="font-size:20px;">'+m.emoji+'</div>'+
+      '<div style="flex:1;"><div style="font-weight:800;font-size:13px;margin-bottom:2px;">'+m.nome+'</div>'+
+      '<div style="font-size:11px;color:'+lv.cor+';font-weight:700;margin-bottom:4px;">'+lv.emoji+' '+lv.name+'</div>'+
+      '<div style="height:4px;border-radius:2px;background:#eee;overflow:hidden;"><div style="height:100%;width:'+p+'%;background:'+m.cor+';border-radius:2px;"></div></div></div>'+
+      '<div style="text-align:right;flex-shrink:0;"><div style="font-weight:900;font-size:18px;color:'+m.cor+';">'+(m.s.xp||0)+'</div><div style="font-size:9px;color:#aaa;">XP</div>'+
+      '<div style="font-size:11px;font-weight:700;color:'+(p>=70?'#2E7D32':p>=40?'#E65100':'#bbb')+';">'+p+'%</div></div></div>';
+    rl.appendChild(d);
+  });
+}
+
+function htab(t){
+  document.getElementById('TMC').style.display=t==='m'?'block':'none';
+  document.getElementById('TRC').style.display=t==='r'?'block':'none';
+  const on='padding:8px 14px;border:none;cursor:pointer;font-family:Nunito,sans-serif;font-weight:800;font-size:12px;border-radius:8px 8px 0 0;background:#1B5E20;color:#fff;border-bottom:2px solid #1B5E20;';
+  const off='padding:8px 14px;border:none;cursor:pointer;font-family:Nunito,sans-serif;font-weight:800;font-size:12px;border-radius:8px 8px 0 0;background:#f0f0f0;color:#666;border-bottom:2px solid transparent;';
+  document.getElementById('TM').style.cssText=t==='m'?on:off;
+  document.getElementById('TR').style.cssText=t==='r'?on:off;
+  if(t==='r')renderRanking();
+}
+
+// ═══════════════════════════════════════
+// GUIDE
+// ═══════════════════════════════════════
+function renderGuide(m){
+  document.getElementById('GBAR').style.background='linear-gradient(135deg,'+m.cor+','+m.cor+'cc)';
+  document.getElementById('GTITLE').textContent=m.emoji+' '+m.nome;
+  const ch=gcache(m.id);
+  let h='<div style="background:linear-gradient(135deg,'+m.cor+','+m.cor+'cc);border-radius:16px;padding:16px 18px;margin-bottom:14px;color:#fff;">'+
+    '<div style="font-weight:900;font-size:17px;margin-bottom:4px;">'+m.emoji+' '+m.nome+'</div>'+
+    '<div style="font-size:12px;opacity:.8;">Insira o conteúdo para gerar exercícios</div></div>';
+  if(ch){
+    h+='<div style="background:#E8F5E9;border:2px solid #A5D6A7;border-radius:12px;padding:12px 14px;margin-bottom:14px;">'+
+      '<div style="font-weight:800;font-size:13px;color:#1B5E20;margin-bottom:4px;">💾 '+ch.q.length+' questões salvas · '+ch.age+'h atrás</div>'+
+      '<div style="font-size:12px;color:#555;margin-bottom:10px;">Use sem internet ou gere questões novas do mesmo guia</div>'+
+      '<div style="display:flex;gap:8px;">'+
+        '<button class="btn bg" style="flex:1;padding:9px;" onclick="startQuiz(gcache(CM.id).q,gcache(CM.id).content)">▶ Usar</button>'+
+        (ch.content?'<button class="btn bo" style="flex:1;padding:9px;" onclick="regenFromCache()">🔄 Novas questões</button>':'')+'</div></div>';
+  }
+  h+='<div class="g2" style="margin-bottom:10px;">'+
+    '<div class="card" onclick="openUpload()" style="cursor:pointer;border:2px solid '+m.cor+'33;text-align:center;padding:18px 10px;">'+
+      '<div style="font-size:28px;margin-bottom:6px;">📎</div>'+
+      '<div style="font-weight:800;font-size:12px;color:#333;">Upload de arquivo</div>'+
+      '<div style="font-size:11px;color:#888;margin-top:3px;">PDF · foto · imagem · txt</div></div>'+
+    '<div class="card" onclick="showTxtMode()" style="cursor:pointer;border:2px solid '+m.cor+'33;text-align:center;padding:18px 10px;">'+
+      '<div style="font-size:28px;margin-bottom:6px;">📄</div>'+
+      '<div style="font-weight:800;font-size:12px;color:#333;">Colar texto</div>'+
+      '<div style="font-size:11px;color:#888;margin-top:3px;">Guia ou anotações</div></div></div>'+
+    '<div class="card" onclick="showTpMode()" style="cursor:pointer;border:2px solid '+m.cor+'33;margin-bottom:14px;display:flex;align-items:center;gap:14px;padding:16px;">'+
+      '<div style="font-size:28px;">📋</div>'+
+      '<div><div style="font-weight:800;font-size:13px;color:#333;">Digitar tópicos</div>'+
+      '<div style="font-size:12px;color:#888;">Liste os tópicos manualmente</div></div></div>'+
+    '<div id="MA"></div>';
+  document.getElementById('GC').innerHTML=h;
+}
+
+function openUpload(){
+  // Reset state
+  UF=[];
+  document.getElementById('ULIST').innerHTML='';
+  document.getElementById('UEXT').value='';
+  const btn=document.getElementById('UBTN');btn.disabled=true;btn.style.opacity='.4';
+  // Style bar with materia color
+  document.getElementById('UBAR').style.background='linear-gradient(135deg,'+CM.cor+','+CM.cor+'cc)';
+  showPage('PU');
+}
+
+function showTxtMode(){
+  document.getElementById('MA').innerHTML=
+    '<div class="card">'+
+      '<div style="font-weight:800;font-size:14px;margin-bottom:10px;">📄 Colar guia de estudos</div>'+
+      '<textarea id="TXT" class="fld" style="min-height:150px;" placeholder="Cole aqui o guia de '+CM.nome+'..."></textarea>'+
+      '<div style="display:flex;gap:10px;margin-top:12px;">'+
+        '<button class="btn bw" onclick="renderGuide(CM)">← Voltar</button>'+
+        '<button class="btn bg w100" style="flex:1;" onclick="doTx()">🚀 Gerar com IA</button>'+
+      '</div></div>';
+}
+
+function showTpMode(){
+  document.getElementById('MA').innerHTML=
+    '<div class="card">'+
+      '<div style="font-weight:800;font-size:14px;margin-bottom:10px;">📋 Digitar tópicos</div>'+
+      '<div id="TL"><div style="display:flex;gap:8px;margin-bottom:8px;"><input class="fld ti" placeholder="Tópico 1"/></div></div>'+
+      '<button onclick="addT()" style="display:block;width:100%;background:none;border:2px dashed #ddd;border-radius:8px;padding:7px;font-family:Nunito,sans-serif;font-size:12px;font-weight:700;color:#888;cursor:pointer;margin-bottom:14px;">+ Adicionar tópico</button>'+
+      '<div style="display:flex;gap:10px;">'+
+        '<button class="btn bw" onclick="renderGuide(CM)">← Voltar</button>'+
+        '<button class="btn bg w100" style="flex:1;" onclick="doTp()">🚀 Gerar com IA</button>'+
+      '</div></div>';
+}
+
+function addT(){
+  const l=document.getElementById('TL'),n=l.children.length+1;
+  const r=document.createElement('div');r.style.cssText='display:flex;gap:8px;margin-bottom:8px;';
+  r.innerHTML='<input class="fld ti" placeholder="Tópico '+n+'"/>'+
+    '<button onclick="this.parentElement.remove()" style="background:none;border:none;color:#ccc;cursor:pointer;font-size:18px;padding:0 4px;flex-shrink:0;">✕</button>';
+  l.appendChild(r);
+}
+
+// ═══════════════════════════════════════
+// AI
+// ═══════════════════════════════════════
+const SYS=`Você é professor especialista do 6º ano do Ensino Fundamental brasileiro.
+Analise o material e crie questões de revisão variadas e didáticas.
+Retorne APENAS JSON válido. Sem texto antes ou depois. Sem markdown. Sem backticks.`;
+
+const PROMPT=(nome,seed)=>`
+Matéria: ${nome}
+${seed?'[Variação '+seed+' — questões DIFERENTES das anteriores]':''}
+
+Gere EXATAMENTE 8 questões de revisão baseadas no material acima.
+Distribua obrigatoriamente: 3 múltipla escolha, 2 verdadeiro/falso, 1 relacionar colunas, 2 dissertativas.
+Questões claras, nível 6º ano.
+
+Retorne SOMENTE este JSON:
+{"questions":[
+{"type":"mc","text":"ENUNCIADO","options":["A","B","C","D"],"correct":0,"explanation":"EXPLICAÇÃO","hint":"DICA"},
+{"type":"mc","text":"ENUNCIADO","options":["A","B","C","D"],"correct":1,"explanation":"EXPLICAÇÃO","hint":"DICA"},
+{"type":"mc","text":"ENUNCIADO","options":["A","B","C","D"],"correct":2,"explanation":"EXPLICAÇÃO","hint":"DICA"},
+{"type":"tf","text":"AFIRMAÇÃO","correct":true,"explanation":"EXPLICAÇÃO"},
+{"type":"tf","text":"AFIRMAÇÃO","correct":false,"explanation":"EXPLICAÇÃO"},
+{"type":"matching","text":"Relacione:","left":["T1","T2","T3"],"right":["D2","D3","D1"],"matches":[2,0,1],"explanation":"EXPLICAÇÃO"},
+{"type":"dissertative","text":"ENUNCIADO ABERTO","answer":"GABARITO"},
+{"type":"dissertative","text":"ENUNCIADO ABERTO","answer":"GABARITO"}
+]}`;
+
+async function callAI(parts){
+  const content=[{type:'text',text:SYS+'\n\n'},...parts];
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:4096,messages:[{role:'user',content}]})
+  });
+  if(!res.ok){let e='';try{e=await res.text();}catch{}throw new Error('HTTP '+res.status+' '+e.slice(0,150));}
+  const d=await res.json();
+  if(d.error)throw new Error(d.error.message);
+  return(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+}
+
+async function callAISimple(txt){
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:400,messages:[{role:'user',content:[{type:'text',text:txt}]}]})
+  });
+  if(!res.ok)throw new Error('HTTP '+res.status);
+  const d=await res.json();
+  return(d.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+}
+
+function parseJ(raw){
+  if(!raw)throw new Error('Resposta vazia');
+  try{return JSON.parse(raw.trim());}catch{}
+  const m=raw.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if(m)try{return JSON.parse(m[1].trim());}catch{}
+  const s=raw.indexOf('{'),e=raw.lastIndexOf('}');
+  if(s>=0&&e>s)try{return JSON.parse(raw.slice(s,e+1));}catch{}
+  throw new Error('JSON inválido');
+}
+
+async function generate(parts,cacheContent,seed){
+  const all=[...parts,{type:'text',text:PROMPT(CM.nome,seed)}];
+  document.getElementById('LMSG').textContent=seed?'Gerando novas questões...':'Gerando exercícios com IA...';
+  showPage('PL');
+  try{
+    const raw=await callAI(all);
+    const obj=parseJ(raw);
+    if(!obj.questions||obj.questions.length<4)throw new Error('Questões insuficientes: '+(obj.questions?.length||0));
+    scache(CM.id,obj.questions,cacheContent);
+    LAST_CONTENT=cacheContent;
+    startQuiz(obj.questions,cacheContent);
+  }catch(e){
+    console.error(e);
+    const ch=gcache(CM?.id);
+    if(ch&&!seed){tst('⚠️ Erro IA — usando cache');startQuiz(ch.q,ch.content);}
+    else{renderGuide(CM);showPage('PG');tst('❌ '+e.message.slice(0,80));}
+  }
+}
+
+async function doUp(){
+  if(!UF.length){tst('⚠️ Selecione arquivos!');return;}
+  const extra=document.getElementById('UEXT')?.value?.trim()||'';
+  const parts=[];let cacheText='[Arquivos: '+UF.map(f=>f.n).join(', ')+']\n';
+  for(const f of UF){
+    if(f.ft==='img')parts.push({type:'image',source:{type:'base64',media_type:f.mime,data:f.b64}});
+    else if(f.ft==='pdf')parts.push({type:'document',source:{type:'base64',media_type:'application/pdf',data:f.b64}});
+    else{const t='['+f.n+']:\n'+f.content;parts.push({type:'text',text:t});cacheText+=t+'\n';}
+  }
+  if(extra){parts.push({type:'text',text:'Obs: '+extra});cacheText+='Obs: '+extra;}
+  await generate(parts,cacheText);
+}
+
+async function doTx(){
+  const t=document.getElementById('TXT')?.value?.trim();
+  if(!t){tst('⚠️ Cole o guia!');return;}
+  const c='[Guia — '+CM.nome+']:\n'+t;
+  await generate([{type:'text',text:c}],c);
+}
+
+async function doTp(){
+  const ts=[...document.querySelectorAll('.ti')].map(i=>i.value.trim()).filter(Boolean);
+  if(!ts.length){tst('⚠️ Adicione tópicos!');return;}
+  const c='[Tópicos — '+CM.nome+']:\n'+ts.join('\n');
+  await generate([{type:'text',text:c}],c);
+}
+
+async function regenQuestions(){
+  const c=LAST_CONTENT||(gcache(CM?.id)?.content);
+  if(!c){tst('⚠️ Sem guia salvo. Use "Mudar guia".');return;}
+  await generate([{type:'text',text:c}],c,Date.now().toString(36).toUpperCase());
+}
+
+async function regenFromCache(){
+  const ch=gcache(CM?.id);
+  if(!ch?.content){tst('⚠️ Sem guia salvo.');return;}
+  await generate([{type:'text',text:ch.content}],ch.content,Date.now().toString(36).toUpperCase());
+}
+
+// ═══════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════
+function startQuiz(qs,content){
+  CQS=qs;CQI=0;CRES=[];
+  if(content)LAST_CONTENT=content;
+  document.getElementById('QBAR').style.background='linear-gradient(135deg,'+CM.cor+','+CM.cor+'cc)';
+  document.getElementById('QTITLE').textContent=CM.emoji+' '+CM.nome;
+  showPage('PQ');renderQ();
+}
+
+function setP(){document.getElementById('QPROG').style.width=Math.round(CQI/CQS.length*100)+'%';}
+
+function renderQ(){
+  setP();
+  if(CQI>=CQS.length){renderResult();return;}
+  const q=CQS[CQI];
+  const TL={mc:'Múltipla Escolha',tf:'Verdadeiro ou Falso',matching:'Relacionar Colunas',dissertative:'Dissertativa'};
+  document.getElementById('QC').innerHTML=
+    '<div class="card" style="border:2px solid '+CM.cor+'22;margin-bottom:4px;">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">'+
+    '<span class="tag" style="background:'+CM.cor+';">'+(TL[q.type]||q.type)+'</span>'+
+    '<span style="font-size:12px;color:#aaa;font-weight:600;">'+(CQI+1)+'/'+CQS.length+'</span></div>'+
+    '<div style="font-weight:700;font-size:14px;color:#222;line-height:1.65;margin-bottom:14px;">'+q.text+'</div>'+
+    '<div id="QB"></div><div id="QF"></div></div>';
+  if(q.type==='mc')doMC(q);
+  else if(q.type==='tf')doTF(q);
+  else if(q.type==='matching')doMatch(q);
+  else doDiss(q);
+}
+
+function nxtQ(){CQI++;renderQ();}
+function showFB(ok,xp,expl,extra){
+  document.getElementById('QF').innerHTML=
+    '<div class="fb '+(ok?'fbok':'fbno')+'">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:'+(expl||extra?'8px':'0')+';">'+
+    '<span style="font-weight:900;font-size:15px;color:'+(ok?'#1B5E20':'#B71C1C')+'">'+(ok?'✅ Correto!':'❌ Incorreto')+'</span>'+
+    '<span class="pill" style="background:'+(xp>0?'#2E7D32':'#E65100')+'">'+(xp>0?'+':'')+xp+' XP</span></div>'+
+    (extra?'<div style="font-size:12px;color:#666;margin-bottom:6px;">'+extra+'</div>':'')+
+    (expl?'<div style="font-size:13px;color:#444;line-height:1.65;border-top:1px solid rgba(0,0,0,.08);padding-top:8px;margin-bottom:10px;"><strong>📖</strong> '+expl+'</div>':'')+
+    '<button class="btn bg w100" onclick="nxtQ()">Próxima →</button></div>';
+}
+function sc(ok,xp){ares(CM.id,ok);axp(CM.id,xp);CRES.push({ok,xp});}
+
+function doMC(q){
+  let hu=false;
+  const r=(sel,done)=>{
+    let h='';
+    q.options.forEach((o,i)=>{
+      let bg='#fff',bc='#e0e0e0',col='#333',ic=String.fromCharCode(65+i);
+      if(done){if(i===q.correct){bg='#E8F5E9';bc='#2E7D32';col='#1B5E20';ic='✓';}else if(i===sel){bg='#FFEBEE';bc='#B71C1C';col='#B71C1C';ic='✗';}}
+      else if(sel===i){bc='#1565C0';bg='#E3F2FD';}
+      h+='<div class="opt" style="background:'+bg+';border-color:'+bc+';color:'+col+';cursor:'+(done?'default':'pointer')+';"'+(!done?' onclick="pMC('+i+')"':'')+'>'+
+        '<div class="circ" style="background:'+bc+';">'+ic+'</div>'+o+'</div>';
+    });
+    if(!done&&q.hint){h+=hu?
+      '<div style="margin-top:8px;background:#FFF9C4;border:1px solid #F9A825;border-radius:8px;padding:9px 12px;font-size:12px;color:#555;">💡 <strong>Dica:</strong> '+q.hint+'</div>':
+      '<button onclick="uH()" style="margin-top:6px;background:none;border:2px dashed #F9A825;color:#E65100;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:Nunito,sans-serif;">💡 Dica <span style="opacity:.6">(−3 XP)</span></button>';}
+    document.getElementById('QB').innerHTML=h;
+  };
+  r(null,false);
+  window.pMC=i=>{r(i,true);const ok=i===q.correct,xp=ok?(hu?7:10):0;sc(ok,xp);showFB(ok,xp,q.explanation);};
+  window.uH=()=>{hu=true;r(null,false);};
+}
+
+function doTF(q){
+  const r=(sel,done)=>{
+    let h='<div class="tfr">';
+    [true,false].forEach(v=>{
+      let bg='#fff',bc='#e0e0e0';
+      if(done){if(v===q.correct){bg='#E8F5E9';bc='#2E7D32';}else if(v===sel){bg='#FFEBEE';bc='#B71C1C';}}
+      else if(sel===v){bc='#1565C0';bg='#E3F2FD';}
+      h+='<button class="tfo" style="background:'+bg+';border-color:'+bc+';cursor:'+(done?'default':'pointer')+';"'+(!done?' onclick="pTF('+(v?1:0)+')"':'')+'>'+
+        (v?'✅ Verdadeiro':'❌ Falso')+'</button>';
+    });
+    document.getElementById('QB').innerHTML=h+'</div>';
+  };
+  r(null,false);
+  window.pTF=v=>{const vb=v===1;r(vb,true);const ok=vb===q.correct,xp=ok?10:0;sc(ok,xp);showFB(ok,xp,q.explanation);};
+}
+
+function doMatch(q){
+  const sh=q.right.map((r,i)=>({t:r,o:i})).sort(()=>Math.random()-.5);
+  let pairs={},selL=null,done=false;
+  const r=()=>{
+    let h='<div class="g2" style="margin-bottom:10px;"><div><div class="mhdr">Coluna A</div>';
+    q.left.forEach((item,i)=>{
+      const isSel=selL===i,hp=pairs[i]!==undefined;
+      h+='<div class="mi" style="background:'+(isSel?'#E3F2FD':hp?'#E8F5E9':'#f8f8f8')+';border-color:'+(isSel?'#1565C0':hp?'#2E7D32':'#e0e0e0')+';cursor:'+(done?'default':'pointer')+';"'+(done?'':' onclick="mL('+i+')"')+'>'+
+        item+(hp?'<div style="font-size:10px;color:#2E7D32;margin-top:2px;">→ '+q.right[pairs[i]]+'</div>':'')+'</div>';
+    });
+    h+='</div><div><div class="mhdr">Coluna B</div>';
+    sh.forEach((item,si)=>{
+      const used=Object.values(pairs).includes(item.o);
+      h+='<div class="mi" style="opacity:'+(used?.45:1)+';cursor:'+(used||done?'default':'pointer')+';background:'+(used?'#f0f0f0':'#fff')+';"'+(used||done?'':' onclick="mR('+si+')"')+'>'+item.t+'</div>';
+    });
+    h+='</div></div>';
+    if(!done){const filled=Object.keys(pairs).length;h+='<button class="btn bg w100" '+(filled<q.left.length?'disabled style="opacity:.4;"':'')+' onclick="mSub()">Confirmar →</button>';}
+    document.getElementById('QB').innerHTML=h;
+    if(done){let cr='';q.left.forEach((item,i)=>{const ok=pairs[i]===q.matches[i];cr+='<div style="padding:7px 10px;margin-bottom:4px;border-radius:8px;font-size:12px;background:'+(ok?'#E8F5E9':'#FFEBEE')+';border:1px solid '+(ok?'#A5D6A7':'#FFCDD2')+';">'+(ok?'✅':'❌')+' '+item+' → <strong>'+q.right[q.matches[i]]+'</strong></div>';});document.getElementById('QB').innerHTML+=cr;}
+  };
+  r();
+  window.mL=i=>{if(done)return;selL=i;r();};
+  window.mR=si=>{if(done||selL===null)return;pairs[selL]=sh[si].o;selL=null;r();};
+  window.mSub=()=>{done=true;r();const hits=q.left.filter((_,i)=>pairs[i]===q.matches[i]).length;const part=hits/q.left.length,ok=part===1,xp=Math.round(part*15);sc(ok,xp);showFB(ok,xp,q.explanation,hits+'/'+q.left.length+' pares corretos');};
+}
+
+function doDiss(q){
+  document.getElementById('QB').innerHTML=
+    '<textarea id="DANS" class="fld" style="min-height:90px;" placeholder="Escreva sua resposta..."></textarea>'+
+    '<button id="DBTN" class="btn bg w100" style="margin-top:8px;" onclick="subDiss()">Enviar Resposta</button>';
+  window.subDiss=async()=>{
+    const t=document.getElementById('DANS')?.value?.trim();
+    if(!t){tst('⚠️ Escreva sua resposta!');return;}
+    const btn=document.getElementById('DBTN');
+    if(btn){btn.textContent='⏳ Avaliando...';btn.disabled=true;}
+    document.getElementById('DANS').disabled=true;
+    let ev='',nota=5,xp=7;
+    try{
+      ev=await callAISimple('Você é professor do 6º ano. Avalie a resposta do aluno.\n\nQuestão: '+q.text+'\nGabarito: '+q.answer+'\nResposta: "'+t+'"\n\nAvalie em 3 linhas. Comece com "Nota: X/10 |"');
+      nota=parseFloat(ev.match(/Nota:\s*(\d+(?:\.\d+)?)/i)?.[1]||'5');
+      xp=Math.round((nota/10)*15);
+    }catch{ev='Sem conexão. Gabarito: '+q.answer;xp=7;}
+    const ok=nota>=6;sc(ok,xp);
+    document.getElementById('QB').innerHTML=
+      '<div style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:10px;padding:12px;margin-bottom:10px;">'+
+      '<div style="font-size:11px;font-weight:700;color:#888;margin-bottom:4px;">SUA RESPOSTA:</div>'+
+      '<div style="font-size:13px;color:#444;line-height:1.6;">'+t+'</div></div>'+
+      '<div style="background:#F8F9FA;border:1px solid #e0e0e0;border-radius:12px;padding:14px;font-size:13px;color:#444;line-height:1.7;"><strong>📋 Avaliação:</strong> '+ev+'</div>';
+    document.getElementById('QF').innerHTML=
+      '<div class="fb '+(ok?'fbok':'fbno')+'" style="margin-top:12px;">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'+
+      '<span style="font-weight:900;font-size:15px;color:'+(ok?'#1B5E20':'#B71C1C')+'">'+(ok?'✅ Aprovado!':'📚 Continue!')+'</span>'+
+      '<span class="pill" style="background:'+(ok?'#2E7D32':'#E65100')+';">+'+xp+' XP</span></div>'+
+      '<button class="btn bg w100" onclick="nxtQ()">Próxima →</button></div>';
+  };
+}
+
+function renderResult(){
+  setP();
+  const tot=CRES.length,hits=CRES.filter(r=>r.ok).length,xs=CRES.reduce((s,r)=>s+r.xp,0);
+  const pct=tot?Math.round(hits/tot*100):0;
+  const medal=pct>=80?'🥇':pct>=60?'🥈':pct>=40?'🥉':'📚';
+  document.getElementById('QC').innerHTML=
+    '<div class="card" style="text-align:center;padding:28px 20px;">'+
+    '<div style="font-size:52px;margin-bottom:10px;">'+medal+'</div>'+
+    '<div style="font-weight:900;font-size:22px;color:#1B5E20;margin-bottom:4px;">'+(pct>=80?'Arrasou!':pct>=60?'Muito bem!':pct>=40?'Continue!':'Estude mais!')+'</div>'+
+    '<div style="color:#888;font-size:14px;margin-bottom:18px;">'+hits+'/'+tot+' corretas · '+pct+'%</div>'+
+    '<div style="background:#FFF9C4;border:2px solid #F9A825;border-radius:14px;padding:14px 24px;margin-bottom:20px;display:inline-block;">'+
+    '<div style="font-weight:900;font-size:30px;color:#1B5E20;">+'+xs+' XP</div>'+
+    '<div style="font-size:12px;color:#888;">'+CM.nome+'</div></div>'+
+    '<div class="rgrid">'+CRES.map((r,i)=>'<div style="border-radius:10px;padding:8px;font-size:11px;font-weight:700;text-align:center;background:'+(r.ok?'#E8F5E9':'#FFEBEE')+';color:'+(r.ok?'#2E7D32':'#B71C1C')+';border:1px solid '+(r.ok?'#A5D6A7':'#FFCDD2')+';">Q'+(i+1)+' '+(r.ok?'✅':'❌')+'<br>+'+r.xp+'xp</div>').join('')+'</div>'+
+    '<div style="display:flex;gap:8px;">'+
+    '<button class="btn bw w100" onclick="regenQuestions()">🔄 Novas questões</button>'+
+    '<button class="btn bg w100" onclick="showPage(\'PH\');renderHome()">← Matérias</button>'+
+    '</div></div>';
+}
+
+// ═══════════════════════════════════════
+// PRÉ-CACHE AV1 MAT
+// ═══════════════════════════════════════
+async function preloadMat(){
+  const ch=gcache('matematica');if(ch&&ch.age<72)return;
+  const guia=`Matemática AV1.1 — 6º Ano | Colégio São Luís | 1º Sem 2026
+TÓPICO 1 — Sistema de Numeração Romano e Decimal
+Romano: I=1,V=5,X=10,L=50,C=100,D=500,M=1000. Subtração: IV=4,IX=9,XL=40,XC=90,CD=400,CM=900.
+Decimal: valor posicional dos algarismos. Converter romano↔decimal.
+TÓPICO 2 — Operações com Números Naturais
+Adição: parcela+parcela=soma. Subtração: minuendo-subtraendo=diferença.
+Multiplicação: fator×fator=produto. Divisão: dividendo÷divisor=quociente.
+Operações inversas: adição↔subtração, multiplicação↔divisão.
+TÓPICO 3 — Expressões Numéricas com (),[] e {}
+Ordem: ()→[]→{}. Dentro de cada grupo: ×÷ antes de +−. Potenciação tem prioridade.
+TÓPICO 4 — Potenciação
+base^expoente = multiplicação repetida da base. x⁰=1, x¹=x. 2³=8 (não 6).`;
+  try{
+    const raw=await callAI([{type:'text',text:guia}]);
+    const obj=parseJ(raw);
+    if(obj.questions?.length>=4){scache('matematica',obj.questions,guia);renderHome();}
+  }catch(e){console.log('Preload:',e.message);}
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+renderHome();
+setTimeout(preloadMat,2000);
+</script>
+</body>
+</html>
